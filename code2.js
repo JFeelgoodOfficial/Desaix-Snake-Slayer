@@ -927,207 +927,33 @@ gdjs.tutorialCode.mapOfGDgdjs_9546tutorialCode_9546GDdownObjects4Objects = Hasht
 gdjs.tutorialCode.eventsList19 = function(runtimeScene) {
 
 {
+// Record tap/click world position as movement destination.
+if (gdjs.evtTools.input.isMouseButtonPressed(runtimeScene, "Left")) {
+    gdjs._ptcX = gdjs.evtTools.input.getCursorX(runtimeScene, "", 0);
+    gdjs._ptcY = gdjs.evtTools.input.getCursorY(runtimeScene, "", 0);
+}
+}
 
-gdjs.tutorialCode.GDrightObjects4.length = 0;
-
-
-let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-{gdjs.tutorialCode.GDrightObjects4_1final.length = 0;
-let isConditionTrue_1 = false;
-isConditionTrue_0 = false;
 {
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "d");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "Right");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-gdjs.copyArray(runtimeScene.getObjects("right"), gdjs.tutorialCode.GDrightObjects5);
-isConditionTrue_1 = gdjs.evtTools.input.cursorOnObject(gdjs.tutorialCode.mapOfGDgdjs_9546tutorialCode_9546GDrightObjects5Objects, runtimeScene, true, false);
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-    for (let j = 0, jLen = gdjs.tutorialCode.GDrightObjects5.length; j < jLen ; ++j) {
-        if ( gdjs.tutorialCode.GDrightObjects4_1final.indexOf(gdjs.tutorialCode.GDrightObjects5[j]) === -1 )
-            gdjs.tutorialCode.GDrightObjects4_1final.push(gdjs.tutorialCode.GDrightObjects5[j]);
-    }
-}
-}
-{
-gdjs.copyArray(gdjs.tutorialCode.GDrightObjects4_1final, gdjs.tutorialCode.GDrightObjects4);
-}
-}
-if (isConditionTrue_0) {
+// Steer TopDownMovement toward the tapped destination each frame.
 gdjs.copyArray(gdjs.tutorialCode.GDPlayerObjects1, gdjs.tutorialCode.GDPlayerObjects4);
-
-{for(var i = 0, len = gdjs.tutorialCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.tutorialCode.GDPlayerObjects4[i].getBehavior("TopDownMovement").simulateRightKey();
-}
-}{for(var i = 0, len = gdjs.tutorialCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.tutorialCode.GDPlayerObjects4[i].addForce(1, (gdjs.tutorialCode.GDPlayerObjects4[i].getAverageForce().getY()), 0);
-}
-}}
-
-}
-
-
-{
-
-gdjs.tutorialCode.GDleftObjects4.length = 0;
-
-
-let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-{gdjs.tutorialCode.GDleftObjects4_1final.length = 0;
-let isConditionTrue_1 = false;
-isConditionTrue_0 = false;
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "a");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "Left");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-gdjs.copyArray(runtimeScene.getObjects("left"), gdjs.tutorialCode.GDleftObjects5);
-isConditionTrue_1 = gdjs.evtTools.input.cursorOnObject(gdjs.tutorialCode.mapOfGDgdjs_9546tutorialCode_9546GDleftObjects5Objects, runtimeScene, true, false);
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-    for (let j = 0, jLen = gdjs.tutorialCode.GDleftObjects5.length; j < jLen ; ++j) {
-        if ( gdjs.tutorialCode.GDleftObjects4_1final.indexOf(gdjs.tutorialCode.GDleftObjects5[j]) === -1 )
-            gdjs.tutorialCode.GDleftObjects4_1final.push(gdjs.tutorialCode.GDleftObjects5[j]);
+for (var i = 0, len = gdjs.tutorialCode.GDPlayerObjects4.length; i < len; ++i) {
+    var _p = gdjs.tutorialCode.GDPlayerObjects4[i];
+    var _tx = (gdjs._ptcX !== undefined) ? gdjs._ptcX : _p.getX();
+    var _ty = (gdjs._ptcY !== undefined) ? gdjs._ptcY : _p.getY();
+    var _dx = _tx - _p.getX();
+    var _dy = _ty - _p.getY();
+    if (Math.abs(_dx) > 8 || Math.abs(_dy) > 8) {
+        var _beh = _p.getBehavior("TopDownMovement");
+        if (_dx > 8)  _beh.simulateRightKey();
+        if (_dx < -8) _beh.simulateLeftKey();
+        if (_dy > 8)  _beh.simulateDownKey();
+        if (_dy < -8) _beh.simulateUpKey();
     }
 }
 }
-{
-gdjs.copyArray(gdjs.tutorialCode.GDleftObjects4_1final, gdjs.tutorialCode.GDleftObjects4);
-}
-}
-if (isConditionTrue_0) {
-gdjs.copyArray(gdjs.tutorialCode.GDPlayerObjects1, gdjs.tutorialCode.GDPlayerObjects4);
-
-{for(var i = 0, len = gdjs.tutorialCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.tutorialCode.GDPlayerObjects4[i].getBehavior("TopDownMovement").simulateLeftKey();
-}
-}{for(var i = 0, len = gdjs.tutorialCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.tutorialCode.GDPlayerObjects4[i].addForce(-(1), (gdjs.tutorialCode.GDPlayerObjects4[i].getAverageForce().getY()), 0);
-}
-}}
-
-}
 
 
-{
-
-gdjs.tutorialCode.GDupObjects4.length = 0;
-
-
-let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-{gdjs.tutorialCode.GDupObjects4_1final.length = 0;
-let isConditionTrue_1 = false;
-isConditionTrue_0 = false;
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "w");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "Up");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-gdjs.copyArray(runtimeScene.getObjects("up"), gdjs.tutorialCode.GDupObjects5);
-isConditionTrue_1 = gdjs.evtTools.input.cursorOnObject(gdjs.tutorialCode.mapOfGDgdjs_9546tutorialCode_9546GDupObjects5Objects, runtimeScene, true, false);
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-    for (let j = 0, jLen = gdjs.tutorialCode.GDupObjects5.length; j < jLen ; ++j) {
-        if ( gdjs.tutorialCode.GDupObjects4_1final.indexOf(gdjs.tutorialCode.GDupObjects5[j]) === -1 )
-            gdjs.tutorialCode.GDupObjects4_1final.push(gdjs.tutorialCode.GDupObjects5[j]);
-    }
-}
-}
-{
-gdjs.copyArray(gdjs.tutorialCode.GDupObjects4_1final, gdjs.tutorialCode.GDupObjects4);
-}
-}
-if (isConditionTrue_0) {
-gdjs.copyArray(gdjs.tutorialCode.GDPlayerObjects1, gdjs.tutorialCode.GDPlayerObjects4);
-
-{for(var i = 0, len = gdjs.tutorialCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.tutorialCode.GDPlayerObjects4[i].getBehavior("TopDownMovement").simulateUpKey();
-}
-}{for(var i = 0, len = gdjs.tutorialCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.tutorialCode.GDPlayerObjects4[i].addForce((gdjs.tutorialCode.GDPlayerObjects4[i].getAverageForce().getX()), 1, 0);
-}
-}}
-
-}
-
-
-{
-
-gdjs.tutorialCode.GDdownObjects3.length = 0;
-
-
-let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-{gdjs.tutorialCode.GDdownObjects3_1final.length = 0;
-let isConditionTrue_1 = false;
-isConditionTrue_0 = false;
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "s");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "Down");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-gdjs.copyArray(runtimeScene.getObjects("down"), gdjs.tutorialCode.GDdownObjects4);
-isConditionTrue_1 = gdjs.evtTools.input.cursorOnObject(gdjs.tutorialCode.mapOfGDgdjs_9546tutorialCode_9546GDdownObjects4Objects, runtimeScene, true, false);
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-    for (let j = 0, jLen = gdjs.tutorialCode.GDdownObjects4.length; j < jLen ; ++j) {
-        if ( gdjs.tutorialCode.GDdownObjects3_1final.indexOf(gdjs.tutorialCode.GDdownObjects4[j]) === -1 )
-            gdjs.tutorialCode.GDdownObjects3_1final.push(gdjs.tutorialCode.GDdownObjects4[j]);
-    }
-}
-}
-{
-gdjs.copyArray(gdjs.tutorialCode.GDdownObjects3_1final, gdjs.tutorialCode.GDdownObjects3);
-}
-}
-if (isConditionTrue_0) {
-gdjs.copyArray(gdjs.tutorialCode.GDPlayerObjects1, gdjs.tutorialCode.GDPlayerObjects3);
-
-{for(var i = 0, len = gdjs.tutorialCode.GDPlayerObjects3.length ;i < len;++i) {
-    gdjs.tutorialCode.GDPlayerObjects3[i].getBehavior("TopDownMovement").simulateDownKey();
-}
-}{for(var i = 0, len = gdjs.tutorialCode.GDPlayerObjects3.length ;i < len;++i) {
-    gdjs.tutorialCode.GDPlayerObjects3[i].addForce((gdjs.tutorialCode.GDPlayerObjects3[i].getAverageForce().getX()), -(1), 0);
-}
-}}
-
-}
 
 
 };gdjs.tutorialCode.mapOfGDgdjs_9546tutorialCode_9546GDPlayerObjects4Objects = Hashtable.newFrom({"Player": gdjs.tutorialCode.GDPlayerObjects4});
@@ -2330,39 +2156,35 @@ gdjs.tutorialCode.eventsList27(runtimeScene);
 gdjs.tutorialCode.eventsList29 = function(runtimeScene) {
 
 {
+// Find nearest enemy for auto-aim and auto-fire.
+var _enemies = runtimeScene.getObjects("Enemy");
+var _player = gdjs.tutorialCode.GDPlayerObjects1.length > 0 ? gdjs.tutorialCode.GDPlayerObjects1[0] : null;
+var _nearest = null;
+var _nearestDist = Infinity;
+if (_player) {
+    for (var _ei = 0; _ei < _enemies.length; ++_ei) {
+        var _e = _enemies[_ei];
+        var _edx = _e.getX() - _player.getX();
+        var _edy = _e.getY() - _player.getY();
+        var _ed = Math.sqrt(_edx*_edx + _edy*_edy);
+        if (_ed < _nearestDist) { _nearestDist = _ed; _nearest = _e; }
+    }
+}
 
+// Keep Aim sprite pointed at nearest enemy.
+if (_nearest) {
+    for (var i = 0, len = gdjs.tutorialCode.GDAimObjects1.length; i < len; ++i) {
+        gdjs.tutorialCode.GDAimObjects1[i].rotateTowardPosition(_nearest.getX(), _nearest.getY(), 0, runtimeScene);
+    }
+}
 
+// Auto-fire every 0.5 s when an enemy is within range.
 let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-{let isConditionTrue_1 = false;
-isConditionTrue_0 = false;
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "z");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "Space");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isMouseButtonPressed(runtimeScene, "Left");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-}
+if (_nearest && _nearestDist < 700) {
+    isConditionTrue_0 = gdjs.evtTools.runtimeScene.timerElapsedTime(runtimeScene, 0.5, "AutoFire");
 }
 if (isConditionTrue_0) {
-isConditionTrue_0 = false;
-{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(24160916);
-}
-}
-if (isConditionTrue_0) {
+gdjs.evtTools.runtimeScene.resetTimer(runtimeScene, "AutoFire");
 gdjs.copyArray(gdjs.tutorialCode.GDAimObjects1, gdjs.tutorialCode.GDAimObjects2);
 
 gdjs.copyArray(runtimeScene.getObjects("Gun"), gdjs.tutorialCode.GDGunObjects2);
@@ -3132,6 +2954,14 @@ gdjs.copyArray(runtimeScene.getObjects("RestartButton"), gdjs.tutorialCode.GDRes
 }
 }{for(var i = 0, len = gdjs.tutorialCode.GDHomeButtonObjects1.length ;i < len;++i) {
     gdjs.tutorialCode.GDHomeButtonObjects1[i].hide();
+}
+}
+{
+// Hide virtual d-pad (replaced by point-to-click).
+var _dpadNames = ["right","left","up","down"];
+for (var _di = 0; _di < _dpadNames.length; ++_di) {
+    var _dpadObjs = runtimeScene.getObjects(_dpadNames[_di]);
+    for (var _oi = 0; _oi < _dpadObjs.length; ++_oi) _dpadObjs[_oi].hide();
 }
 }
 { //Subevents
