@@ -548,7 +548,7 @@ gdjs.copyArray(runtimeScene.getObjects("HudTextKills"), gdjs.GameSceneCode.GDHud
     gdjs.GameSceneCode.GDHudTextHpObjects2[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(1)) + "/" + gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(2)));
 }
 }{for(var i = 0, len = gdjs.GameSceneCode.GDHudTextCoinsObjects2.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDHudTextCoinsObjects2[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().get("coins")) + "/" + gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(0)));
+    gdjs.GameSceneCode.GDHudTextCoinsObjects2[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(0)));
 }
 }}
 

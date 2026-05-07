@@ -580,7 +580,7 @@ gdjs.copyArray(runtimeScene.getObjects("HudTextKills"), gdjs.tutorialCode.GDHudT
     gdjs.tutorialCode.GDHudTextHpObjects2[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(1)) + "/" + gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(2)));
 }
 }{for(var i = 0, len = gdjs.tutorialCode.GDHudTextCoinsObjects2.length ;i < len;++i) {
-    gdjs.tutorialCode.GDHudTextCoinsObjects2[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().get("coins")) + "/" + gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(0)));
+    gdjs.tutorialCode.GDHudTextCoinsObjects2[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(0)));
 }
 }}
 
