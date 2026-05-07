@@ -548,7 +548,7 @@ gdjs.copyArray(runtimeScene.getObjects("HudTextKills"), gdjs.GameSceneCode.GDHud
     gdjs.GameSceneCode.GDHudTextHpObjects2[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(1)) + "/" + gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(2)));
 }
 }{for(var i = 0, len = gdjs.GameSceneCode.GDHudTextCoinsObjects2.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDHudTextCoinsObjects2[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().get("coins")) + "/" + gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(0)));
+    gdjs.GameSceneCode.GDHudTextCoinsObjects2[i].setString(gdjs.evtTools.variable.getVariableString(runtimeScene.getScene().getVariables().getFromIndex(0)));
 }
 }}
 
@@ -907,146 +907,30 @@ gdjs.copyArray(gdjs.GameSceneCode.GDPlayerObjects1, gdjs.GameSceneCode.GDPlayerO
 };gdjs.GameSceneCode.eventsList19 = function(runtimeScene) {
 
 {
+// Record tap/click world position as movement destination.
+if (gdjs.evtTools.input.isMouseButtonPressed(runtimeScene, "Left")) {
+    gdjs._ptcX = gdjs.evtTools.input.getCursorX(runtimeScene, "", 0);
+    gdjs._ptcY = gdjs.evtTools.input.getCursorY(runtimeScene, "", 0);
+}
+}
 
-
-let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-{let isConditionTrue_1 = false;
-isConditionTrue_0 = false;
 {
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "d");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "Right");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-}
-}
-if (isConditionTrue_0) {
+// Steer TopDownMovement toward the tapped destination each frame.
 gdjs.copyArray(gdjs.GameSceneCode.GDPlayerObjects1, gdjs.GameSceneCode.GDPlayerObjects4);
-
-{for(var i = 0, len = gdjs.GameSceneCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDPlayerObjects4[i].getBehavior("TopDownMovement").simulateRightKey();
+for (var i = 0, len = gdjs.GameSceneCode.GDPlayerObjects4.length; i < len; ++i) {
+    var _p = gdjs.GameSceneCode.GDPlayerObjects4[i];
+    var _tx = (gdjs._ptcX !== undefined) ? gdjs._ptcX : _p.getX();
+    var _ty = (gdjs._ptcY !== undefined) ? gdjs._ptcY : _p.getY();
+    var _dx = _tx - _p.getX();
+    var _dy = _ty - _p.getY();
+    if (Math.abs(_dx) > 8 || Math.abs(_dy) > 8) {
+        var _beh = _p.getBehavior("TopDownMovement");
+        if (_dx > 8)  _beh.simulateRightKey();
+        if (_dx < -8) _beh.simulateLeftKey();
+        if (_dy > 8)  _beh.simulateDownKey();
+        if (_dy < -8) _beh.simulateUpKey();
+    }
 }
-}{for(var i = 0, len = gdjs.GameSceneCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDPlayerObjects4[i].addForce(1, (gdjs.GameSceneCode.GDPlayerObjects4[i].getAverageForce().getY()), 0);
-}
-}}
-
-}
-
-
-{
-
-
-let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-{let isConditionTrue_1 = false;
-isConditionTrue_0 = false;
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "a");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "Left");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-}
-}
-if (isConditionTrue_0) {
-gdjs.copyArray(gdjs.GameSceneCode.GDPlayerObjects1, gdjs.GameSceneCode.GDPlayerObjects4);
-
-{for(var i = 0, len = gdjs.GameSceneCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDPlayerObjects4[i].getBehavior("TopDownMovement").simulateLeftKey();
-}
-}{for(var i = 0, len = gdjs.GameSceneCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDPlayerObjects4[i].addForce(-(1), (gdjs.GameSceneCode.GDPlayerObjects4[i].getAverageForce().getY()), 0);
-}
-}}
-
-}
-
-
-{
-
-
-let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-{let isConditionTrue_1 = false;
-isConditionTrue_0 = false;
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "w");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "Up");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-}
-}
-if (isConditionTrue_0) {
-gdjs.copyArray(gdjs.GameSceneCode.GDPlayerObjects1, gdjs.GameSceneCode.GDPlayerObjects4);
-
-{for(var i = 0, len = gdjs.GameSceneCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDPlayerObjects4[i].getBehavior("TopDownMovement").simulateUpKey();
-}
-}{for(var i = 0, len = gdjs.GameSceneCode.GDPlayerObjects4.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDPlayerObjects4[i].addForce((gdjs.GameSceneCode.GDPlayerObjects4[i].getAverageForce().getX()), 1, 0);
-}
-}}
-
-}
-
-
-{
-
-
-let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-{let isConditionTrue_1 = false;
-isConditionTrue_0 = false;
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "s");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "Down");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-}
-}
-if (isConditionTrue_0) {
-gdjs.copyArray(gdjs.GameSceneCode.GDPlayerObjects1, gdjs.GameSceneCode.GDPlayerObjects3);
-
-{for(var i = 0, len = gdjs.GameSceneCode.GDPlayerObjects3.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDPlayerObjects3[i].getBehavior("TopDownMovement").simulateDownKey();
-}
-}{for(var i = 0, len = gdjs.GameSceneCode.GDPlayerObjects3.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDPlayerObjects3[i].addForce((gdjs.GameSceneCode.GDPlayerObjects3[i].getAverageForce().getX()), -(1), 0);
-}
-}}
-
 }
 
 
@@ -2377,39 +2261,35 @@ gdjs.GameSceneCode.eventsList27(runtimeScene);
 gdjs.GameSceneCode.eventsList29 = function(runtimeScene) {
 
 {
+// Find nearest enemy for auto-aim and auto-fire.
+var _enemies = runtimeScene.getObjects("Enemy");
+var _player = gdjs.GameSceneCode.GDPlayerObjects1.length > 0 ? gdjs.GameSceneCode.GDPlayerObjects1[0] : null;
+var _nearest = null;
+var _nearestDist = Infinity;
+if (_player) {
+    for (var _ei = 0; _ei < _enemies.length; ++_ei) {
+        var _e = _enemies[_ei];
+        var _edx = _e.getX() - _player.getX();
+        var _edy = _e.getY() - _player.getY();
+        var _ed = Math.sqrt(_edx*_edx + _edy*_edy);
+        if (_ed < _nearestDist) { _nearestDist = _ed; _nearest = _e; }
+    }
+}
 
+// Keep Aim sprite pointed at nearest enemy.
+if (_nearest) {
+    for (var i = 0, len = gdjs.GameSceneCode.GDAimObjects1.length; i < len; ++i) {
+        gdjs.GameSceneCode.GDAimObjects1[i].rotateTowardPosition(_nearest.getX(), _nearest.getY(), 0, runtimeScene);
+    }
+}
 
+// Auto-fire every 0.5 s when an enemy is within range.
 let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-{let isConditionTrue_1 = false;
-isConditionTrue_0 = false;
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "z");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isKeyPressed(runtimeScene, "Space");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-isConditionTrue_1 = gdjs.evtTools.input.isMouseButtonPressed(runtimeScene, "Left");
-if(isConditionTrue_1) {
-    isConditionTrue_0 = true;
-}
-}
-{
-}
+if (_nearest && _nearestDist < 700) {
+    isConditionTrue_0 = gdjs.evtTools.runtimeScene.timerElapsedTime(runtimeScene, 0.5, "AutoFire");
 }
 if (isConditionTrue_0) {
-isConditionTrue_0 = false;
-{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(11416388);
-}
-}
-if (isConditionTrue_0) {
+gdjs.evtTools.runtimeScene.resetTimer(runtimeScene, "AutoFire");
 gdjs.copyArray(gdjs.GameSceneCode.GDAimObjects1, gdjs.GameSceneCode.GDAimObjects2);
 
 gdjs.copyArray(runtimeScene.getObjects("Gun"), gdjs.GameSceneCode.GDGunObjects2);
