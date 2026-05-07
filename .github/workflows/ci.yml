@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dev dependencies
+        run: npm ci
+
+      - name: npm security audit
+        run: npm audit --audit-level=high
+
+      - name: Inject SEO tags
+        run: node scripts/inject-seo.js
+
+      - name: Validate index.html
+        run: npx html-validate index.html
+
+      - name: Asset audit
+        run: node scripts/check-assets.js
+
+      - name: SEO files check
+        run: node scripts/check-seo-files.js
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright E2E tests
+        run: npx playwright test
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+      # ── Lighthouse CI — PRs to main only ──────────────────────────────────
+      # Set the VERCEL_PREVIEW_URL Actions variable in your repo settings to
+      # point at the Vercel preview URL for the branch under test.
+      # Falls back to the production URL when the variable is not set.
+      - name: Lighthouse CI
+        if: github.event_name == 'pull_request' && github.base_ref == 'main'
+        env:
+          BASE_URL: ${{ vars.VERCEL_PREVIEW_URL || 'https://dss-flame.vercel.app' }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        run: npx lhci autorun
+
+      - name: Upload Lighthouse results
+        if: github.event_name == 'pull_request' && github.base_ref == 'main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+          retention-days: 14
