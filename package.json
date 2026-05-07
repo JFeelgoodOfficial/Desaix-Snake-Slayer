@@ -1,0 +1,22 @@
+{
+  "name": "desaix-snake-slayer",
+  "version": "1.0.0",
+  "description": "Browser game — DESAIX Snake Slayer",
+  "private": true,
+  "scripts": {
+    "dev": "serve -l 3000 .",
+    "seo:inject": "node scripts/inject-seo.js",
+    "lint:html": "html-validate index.html",
+    "audit:assets": "node scripts/check-assets.js",
+    "audit:seo": "node scripts/check-seo-files.js",
+    "test:e2e": "npm run seo:inject && playwright test",
+    "test:e2e:headed": "npm run seo:inject && playwright test --headed",
+    "lighthouse": "lhci autorun"
+  },
+  "devDependencies": {
+    "@lhci/cli": "^0.14.0",
+    "@playwright/test": "^1.44.0",
+    "html-validate": "^9.0.0",
+    "serve": "^14.0.0"
+  }
+}
