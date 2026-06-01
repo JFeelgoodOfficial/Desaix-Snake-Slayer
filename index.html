@@ -37,6 +37,20 @@
             display: block;
             image-rendering: pixelated;
         }
+        /* On mobile: stretch canvas to fill the full viewport */
+        @media (pointer: coarse) {
+            #canvasArea {
+                align-items: stretch;
+                justify-content: stretch;
+            }
+            #canvasArea canvas {
+                width: 100% !important;
+                height: 100% !important;
+                max-width: none !important;
+                max-height: none !important;
+                object-fit: fill;
+            }
+        }
 	</style>
     <!-- Libs and GDJS core files : -->
 		<script src="libs/jshashtable.js" crossorigin="anonymous"></script>
@@ -134,6 +148,7 @@
 	<script src="Extensions/Effects/pixi-filters/filter-advanced-bloom.js" crossorigin="anonymous"></script>
 	<script src="Extensions/Effects/pixi-filters/filter-kawase-blur.js" crossorigin="anonymous"></script>
 	<script src="code0.js" crossorigin="anonymous"></script>
+	<script src="controls.js" crossorigin="anonymous"></script>
 	<script src="code1.js" crossorigin="anonymous"></script>
 	<script src="code2.js" crossorigin="anonymous"></script>
 	<script src="code3.js" crossorigin="anonymous"></script>
@@ -150,6 +165,7 @@
     (function() {
         //Initialization
         var game = new gdjs.RuntimeGame(gdjs.projectData, {});
+        gdjs._game = game; // expose for virtual controls
 
         //Create a renderer
         game.getRenderer().createStandardCanvas(document.body);
