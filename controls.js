@@ -7,6 +7,8 @@
 (function () {
     'use strict';
 
+    function init() {
+
     var isMobile = ('ontouchstart' in window) ||
                    (typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0);
 
@@ -252,5 +254,13 @@
     document.addEventListener('touchmove',   onTouchMove,  { passive:false, capture:true });
     document.addEventListener('touchend',    onTouchEnd,   { passive:false, capture:true });
     document.addEventListener('touchcancel', onTouchEnd,   { passive:false, capture:true });
+
+    } // end init
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 
 })();
