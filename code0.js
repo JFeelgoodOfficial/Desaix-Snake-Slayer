@@ -264,6 +264,11 @@ if (isConditionTrue_0) {
 {gdjs.evtTools.camera.setCameraZoom(runtimeScene, 1, "", 0);
 }{gdjs.evtTools.input.hideCursor(runtimeScene);
 }
+{
+// Hide the crossbar d-pad controls sprite from the HUD.
+var _ctrls = runtimeScene.getObjects("Controls");
+for (var _ci = 0; _ci < _ctrls.length; _ci++) _ctrls[_ci].hide();
+}
 { //Subevents
 gdjs.MainSceneCode.eventsList8(runtimeScene);} //End of subevents
 }
