@@ -1263,6 +1263,7 @@ gdjs.GameSceneCode.GDXObjects4.length = 0;
 }{for(var i = 0, len = gdjs.GameSceneCode.GDdoorXObjects4.length ;i < len;++i) {
     gdjs.GameSceneCode.GDdoorXObjects4[i].deleteFromScene(runtimeScene);
 }
+}{gdjs.GameSceneCode._lavarChasing = true;
 }}
 
 }
@@ -2286,6 +2287,10 @@ if (_player) {
         var _ld = Math.sqrt(_ldx*_ldx + _ldy*_ldy);
         if (_ld < _nearestLavarDist) { _nearestLavarDist = _ld; _nearestLavar = _lv; }
     }
+}
+// Lavar pursues player once doorX gate opens.
+if (gdjs.GameSceneCode._lavarChasing && _nearestLavar && _player) {
+    _nearestLavar.addForceTowardObject(_player, 40, 0);
 }
 
 let isConditionTrue_0 = false;
