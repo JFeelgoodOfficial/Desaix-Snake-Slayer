@@ -4081,6 +4081,12 @@ gdjs.GameSceneCode.GDHGObjects4.length = 0;
 gdjs.GameSceneCode.GDHGObjects5.length = 0;
 gdjs.GameSceneCode.GDHGObjects6.length = 0;
 
+// Always hide d-pad and in-game cursor sprites every frame.
+var _dpadHideNames = ["right","left","up","down","joystick","Cursor"];
+for (var _dhi = 0; _dhi < _dpadHideNames.length; _dhi++) {
+    var _dpadHideObjs = runtimeScene.getObjects(_dpadHideNames[_dhi]);
+    for (var _dhoi = 0; _dhoi < _dpadHideObjs.length; _dhoi++) _dpadHideObjs[_dhoi].hide();
+}
 
 return;
 
