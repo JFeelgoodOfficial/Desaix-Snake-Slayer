@@ -16,6 +16,9 @@
 
     if (!isMobile) return;
 
+    /* On mobile, disable auto-fire until the player holds the FIRE button */
+    gdjs._fireActive = false;
+
     /* ── constants ────────────────────────────────────────────────── */
     var JOY_RADIUS   = 60;    // outer ring radius (px)
     var KNOB_RADIUS  = 26;    // inner knob radius (px)
@@ -231,6 +234,7 @@
             if (isFireButton(x, y) && !fire.on) {
                 fire.on = true;
                 fire.id = t.identifier;
+                gdjs._fireActive = true;
             } else if (isLeftSide(x) && !left.on) {
                 left.on = true;
                 left.id = t.identifier;
@@ -272,6 +276,7 @@
             }
             if (t.identifier === fire.id) {
                 fire.on = false; fire.id = -1;
+                gdjs._fireActive = false;
             }
         }
     }
