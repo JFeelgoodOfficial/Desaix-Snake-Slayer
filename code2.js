@@ -3951,6 +3951,13 @@ gdjs.tutorialCode.GDrightObjects5.length = 0;
 gdjs.tutorialCode.GDrightObjects6.length = 0;
 
 
+// Always hide d-pad sprites every frame (replaced by virtual controls).
+var _dpadHideNames = ["right","left","up","down","joystick"];
+for (var _dhi = 0; _dhi < _dpadHideNames.length; _dhi++) {
+    var _dpadHideObjs = runtimeScene.getObjects(_dpadHideNames[_dhi]);
+    for (var _dhoi = 0; _dhoi < _dpadHideObjs.length; _dhoi++) _dpadHideObjs[_dhoi].hide();
+}
+
 return;
 
 }
