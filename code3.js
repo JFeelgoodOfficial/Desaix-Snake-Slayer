@@ -2283,9 +2283,10 @@ if (_nearest) {
     }
 }
 
-// Auto-fire every 0.5 s when an enemy is within range.
+// Fire every 0.5 s when an enemy is in range AND fire button is held (mobile) or always (desktop).
 let isConditionTrue_0 = false;
-if (_nearest && _nearestDist < 700) {
+var _fireOk = (typeof gdjs._fireActive === 'undefined') ? true : gdjs._fireActive;
+if (_nearest && _nearestDist < 700 && _fireOk) {
     isConditionTrue_0 = gdjs.evtTools.runtimeScene.timerElapsedTime(runtimeScene, 0.5, "AutoFire");
 }
 if (isConditionTrue_0) {
