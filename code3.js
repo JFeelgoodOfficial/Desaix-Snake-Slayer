@@ -2294,12 +2294,12 @@ if (gdjs.GameSceneCode._lavarChasing && _nearestLavar && _player) {
 }
 
 let isConditionTrue_0 = false;
-if ((_nearest && _nearestDist < 150) || (_nearestLavar && _nearestLavarDist < 150)) {
+if ((_nearest && _nearestDist < 60) || (_nearestLavar && _nearestLavarDist < 60)) {
     isConditionTrue_0 = gdjs.evtTools.runtimeScene.timerElapsedTime(runtimeScene, 0.4, "SwordSlash");
 }
 if (isConditionTrue_0) {
 gdjs.evtTools.runtimeScene.resetTimer(runtimeScene, "SwordSlash");
-if (_nearest && _nearestDist < 150) {
+if (_nearest && _nearestDist < 60) {
 gdjs.GameSceneCode.GDEnemyBloodObjects2.length = 0;
 gdjs.GameSceneCode.GDBulletEffectObjects2.length = 0;
 {gdjs.evtTools.object.createObjectOnScene((typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : runtimeScene), gdjs.GameSceneCode.mapOfGDgdjs_9546GameSceneCode_9546GDEnemyBloodObjects2Objects, _nearest.getPointX(""), _nearest.getPointY(""), "");
@@ -2311,7 +2311,7 @@ gdjs.GameSceneCode.GDBulletEffectObjects2.length = 0;
 }{gdjs.evtsExt__CameraShake__CameraShake.func(runtimeScene, 2, 2, "", 0, 0.25, 1, 1, 0.08, false, (typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : undefined));
 }
 }
-if (_nearestLavar && _nearestLavarDist < 150) {
+if (_nearestLavar && _nearestLavarDist < 60) {
 gdjs.copyArray(runtimeScene.getObjects("lavaroad"), gdjs.GameSceneCode.GDlavaroadObjects1);
 gdjs.GameSceneCode.GDEnemyBloodObjects1.length = 0;
 gdjs.GameSceneCode.GDBulletEffectObjects1.length = 0;
