@@ -2172,7 +2172,7 @@ if (_player) {
 }
 
 let isConditionTrue_0 = false;
-if (_nearest && _nearestDist < 150) {
+if (_nearest && _nearestDist < 60) {
     isConditionTrue_0 = gdjs.evtTools.runtimeScene.timerElapsedTime(runtimeScene, 0.4, "SwordSlash");
 }
 if (isConditionTrue_0) {

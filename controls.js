@@ -125,10 +125,9 @@
             var x = t.clientX, y = t.clientY;
             if (!left.on) {
                 left.on = true; left.id = t.identifier;
-                left.bx = x; left.by = y;
+                left.bx = LBX; left.by = LBY;
                 left.dx = 0; left.dy = 0;
-                placeEl(lRing, x, y, JOY_SIZE);
-                placeEl(lKnob, x, y, KNOB_SIZE);
+                placeEl(lKnob, LBX, LBY, KNOB_SIZE);
             }
         }
     }
