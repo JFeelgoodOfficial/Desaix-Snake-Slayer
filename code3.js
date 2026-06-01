@@ -897,7 +897,7 @@ gdjs.copyArray(gdjs.GameSceneCode.GDPlayerObjects1, gdjs.GameSceneCode.GDPlayerO
     gdjs.GameSceneCode.GDCursorObjects2[i].setPosition(gdjs.evtTools.input.getCursorX(runtimeScene, "", 0),gdjs.evtTools.input.getCursorY(runtimeScene, "", 0));
 }
 }{for(var i = 0, len = gdjs.GameSceneCode.GDGunObjects2.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDGunObjects2[i].setPosition((( gdjs.GameSceneCode.GDPlayerObjects2.length === 0 ) ? 0 :gdjs.GameSceneCode.GDPlayerObjects2[0].getPointX("")),(( gdjs.GameSceneCode.GDPlayerObjects2.length === 0 ) ? 0 :gdjs.GameSceneCode.GDPlayerObjects2[0].getPointY("")));
+    gdjs.GameSceneCode.GDGunObjects2[i].hide();
 }
 }}
 
@@ -2261,8 +2261,9 @@ gdjs.GameSceneCode.eventsList27(runtimeScene);
 gdjs.GameSceneCode.eventsList29 = function(runtimeScene) {
 
 {
-// Find nearest enemy for auto-aim and auto-fire.
+// Sword melee: thrash nearest enemy/boss within 150 px every 0.4 s.
 var _enemies = runtimeScene.getObjects("Enemy");
+var _lavars = runtimeScene.getObjects("lavar");
 var _player = gdjs.GameSceneCode.GDPlayerObjects1.length > 0 ? gdjs.GameSceneCode.GDPlayerObjects1[0] : null;
 var _nearest = null;
 var _nearestDist = Infinity;
@@ -2275,40 +2276,55 @@ if (_player) {
         if (_ed < _nearestDist) { _nearestDist = _ed; _nearest = _e; }
     }
 }
-
-// Keep Aim sprite pointed at nearest enemy.
-if (_nearest) {
-    for (var i = 0, len = gdjs.GameSceneCode.GDAimObjects1.length; i < len; ++i) {
-        gdjs.GameSceneCode.GDAimObjects1[i].rotateTowardPosition(_nearest.getX(), _nearest.getY(), 0, runtimeScene);
+var _nearestLavar = null;
+var _nearestLavarDist = Infinity;
+if (_player) {
+    for (var _li = 0; _li < _lavars.length; _li++) {
+        var _lv = _lavars[_li];
+        var _ldx = _lv.getX() - _player.getX();
+        var _ldy = _lv.getY() - _player.getY();
+        var _ld = Math.sqrt(_ldx*_ldx + _ldy*_ldy);
+        if (_ld < _nearestLavarDist) { _nearestLavarDist = _ld; _nearestLavar = _lv; }
     }
 }
 
-// Fire every 0.5 s when an enemy is in range AND fire button is held (mobile) or always (desktop).
 let isConditionTrue_0 = false;
-var _fireOk = (typeof gdjs._fireActive === 'undefined') ? true : gdjs._fireActive;
-if (_nearest && _nearestDist < 700 && _fireOk) {
-    isConditionTrue_0 = gdjs.evtTools.runtimeScene.timerElapsedTime(runtimeScene, 0.5, "AutoFire");
+if ((_nearest && _nearestDist < 150) || (_nearestLavar && _nearestLavarDist < 150)) {
+    isConditionTrue_0 = gdjs.evtTools.runtimeScene.timerElapsedTime(runtimeScene, 0.4, "SwordSlash");
 }
 if (isConditionTrue_0) {
-gdjs.evtTools.runtimeScene.resetTimer(runtimeScene, "AutoFire");
-gdjs.copyArray(gdjs.GameSceneCode.GDAimObjects1, gdjs.GameSceneCode.GDAimObjects2);
-
-gdjs.copyArray(runtimeScene.getObjects("Gun"), gdjs.GameSceneCode.GDGunObjects2);
-gdjs.GameSceneCode.GDBulletObjects2.length = 0;
-
-{gdjs.evtTools.object.createObjectOnScene((typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : runtimeScene), gdjs.GameSceneCode.mapOfGDgdjs_9546GameSceneCode_9546GDBulletObjects2Objects, (( gdjs.GameSceneCode.GDGunObjects2.length === 0 ) ? 0 :gdjs.GameSceneCode.GDGunObjects2[0].getPointX("bullet_right")), (( gdjs.GameSceneCode.GDGunObjects2.length === 0 ) ? 0 :gdjs.GameSceneCode.GDGunObjects2[0].getPointY("bullet_right")), "");
-}{for(var i = 0, len = gdjs.GameSceneCode.GDBulletObjects2.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDBulletObjects2[i].setScale(0.5);
-}
-}{for(var i = 0, len = gdjs.GameSceneCode.GDBulletObjects2.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDBulletObjects2[i].setAngle((( gdjs.GameSceneCode.GDAimObjects2.length === 0 ) ? 0 :gdjs.GameSceneCode.GDAimObjects2[0].getAngle()));
-}
-}{for(var i = 0, len = gdjs.GameSceneCode.GDBulletObjects2.length ;i < len;++i) {
-    gdjs.GameSceneCode.GDBulletObjects2[i].addPolarForce((( gdjs.GameSceneCode.GDAimObjects2.length === 0 ) ? 0 :gdjs.GameSceneCode.GDAimObjects2[0].getAngle()), 200, 1);
-}
-}{gdjs.evtTools.sound.playSoundOnChannel(runtimeScene, "Assets\\sounds\\player_bullet.wav", 22, false, 10, 1);
+gdjs.evtTools.runtimeScene.resetTimer(runtimeScene, "SwordSlash");
+if (_nearest && _nearestDist < 150) {
+gdjs.GameSceneCode.GDEnemyBloodObjects2.length = 0;
+gdjs.GameSceneCode.GDBulletEffectObjects2.length = 0;
+{gdjs.evtTools.object.createObjectOnScene((typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : runtimeScene), gdjs.GameSceneCode.mapOfGDgdjs_9546GameSceneCode_9546GDEnemyBloodObjects2Objects, _nearest.getPointX(""), _nearest.getPointY(""), "");
+}{gdjs.evtTools.object.createObjectOnScene((typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : runtimeScene), gdjs.GameSceneCode.mapOfGDgdjs_9546GameSceneCode_9546GDBulletEffectObjects2Objects, _nearest.getPointX(""), _nearest.getPointY(""), "");
+}{_nearest.deleteFromScene(runtimeScene);
+}{gdjs.evtTools.sound.playSoundOnChannel(runtimeScene, "Assets/sounds/crashbones.wav", 23, false, 60, 1);
+}{runtimeScene.getScene().getVariables().getFromIndex(3).add(1);
+}{gdjs.evtTools.storage.writeNumberInJSONFile("game_data", "total_kills", gdjs.evtTools.variable.getVariableNumber(runtimeScene.getScene().getVariables().getFromIndex(3)));
 }{gdjs.evtsExt__CameraShake__CameraShake.func(runtimeScene, 2, 2, "", 0, 0.25, 1, 1, 0.08, false, (typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : undefined));
-}}
+}
+}
+if (_nearestLavar && _nearestLavarDist < 150) {
+gdjs.copyArray(runtimeScene.getObjects("lavaroad"), gdjs.GameSceneCode.GDlavaroadObjects1);
+gdjs.GameSceneCode.GDEnemyBloodObjects1.length = 0;
+gdjs.GameSceneCode.GDBulletEffectObjects1.length = 0;
+{gdjs.evtTools.object.createObjectOnScene((typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : runtimeScene), gdjs.GameSceneCode.mapOfGDgdjs_9546GameSceneCode_9546GDEnemyBloodObjects1Objects, _nearestLavar.getPointX(""), _nearestLavar.getPointY(""), "");
+}{gdjs.evtTools.object.createObjectOnScene((typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : runtimeScene), gdjs.GameSceneCode.mapOfGDgdjs_9546GameSceneCode_9546GDBulletEffectObjects1Objects, _nearestLavar.getPointX(""), _nearestLavar.getPointY(""), "");
+}{_nearestLavar.deleteFromScene(runtimeScene);
+}{for(var i = 0, len = gdjs.GameSceneCode.GDlavaroadObjects1.length ;i < len;++i) {
+    gdjs.GameSceneCode.GDlavaroadObjects1[i].hide(false);
+}
+}{ //Subevents
+gdjs.GameSceneCode.eventsList39(runtimeScene);} //End of subevents
+{gdjs.evtTools.sound.playSoundOnChannel(runtimeScene, "Assets/sounds/crashbones.wav", 23, false, 60, 1);
+}{runtimeScene.getScene().getVariables().getFromIndex(3).add(1);
+}{gdjs.evtTools.storage.writeNumberInJSONFile("game_data", "total_kills", gdjs.evtTools.variable.getVariableNumber(runtimeScene.getScene().getVariables().getFromIndex(3)));
+}{gdjs.evtsExt__CameraShake__CameraShake.func(runtimeScene, 2, 2, "", 0, 0.25, 1, 1, 0.08, false, (typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : undefined));
+}
+}
+}
 
 }
 
